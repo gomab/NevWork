@@ -15,6 +15,21 @@ use Psr\Http\Message\ServerRequestInterface;
 class App
 {
 
+    private $modules = [];
+
+    /**
+     * App constructor.
+     * @param array $modules Liste des modules à charger
+     */
+    public function __construct(array $modules = [])
+    {
+        //Initialiser chacun des modules
+        foreach ($modules as $module){
+            $this->modules[] = new $module();
+    }
+    }
+
+
     public function run(ServerRequestInterface $request): ResponseInterface
     {
         //Comprendre l'objet Request & Response

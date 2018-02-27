@@ -10,7 +10,9 @@ require '../vendor/autoload.php';
 
 //Initialisation App()
 
-$app = new \Framework\App();
+$app = new \Framework\App([
+    BlogModule::class
+]);
 
 $response = $app->run(\GuzzleHttp\Psr7\ServerRequest::fromGlobals());
 
