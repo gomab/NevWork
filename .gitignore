@@ -14,3 +14,4 @@
 .idea
 Cmd.txt
 vendor/
+composer.lock

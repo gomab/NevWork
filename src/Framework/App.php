@@ -12,22 +12,23 @@ use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-class App{
+class App
+{
 
-    public function run(ServerRequestInterface $request): ResponseInterface{
+    public function run(ServerRequestInterface $request): ResponseInterface
+    {
         //Comprendre l'objet Request & Response
 
         //Recuperation url
         $uri = $request->getUri()->getPath();
 
-        if(!empty($uri) && $uri[-1] == "/"){
+        if (!empty($uri) && $uri[-1] == "/") {
             return (new Response())
                 ->withStatus(301)
                 ->withHeader('Location', substr($uri, 0, -1));
-
         }
 
-        if($uri === '/home'){
+        if ($uri === '/home') {
             return new Response(200, [], '<h1>Welcome to my web site</h1>');
         }
 
