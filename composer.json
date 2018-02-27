@@ -1,0 +1,18 @@
+{
+    "name": "gomab/nev-work",
+    "authors": [
+        {
+            "name": "gomab",
+            "email": "egoiomab@gamil.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Framework\\": "src/Framework"
+        }
+    },
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "^7.0"
+    }
+}
