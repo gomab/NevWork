@@ -11,6 +11,8 @@ namespace Framework;
 
 use Framework\Router\Route;
 use Psr\Http\Message\ServerRequestInterface;
+use Zend\Expressive\Router\FastRouteRouter;
+use Zend\Expressive\Router\Route as ZendRoute;
 
 /**
  * Register and match routes
@@ -22,13 +24,27 @@ use Psr\Http\Message\ServerRequestInterface;
 class Router
 {
     /**
+     * @var FastRouteRouter
+     */
+    private $router;
+
+    /**
+     * Router constructor.
+     */
+    public function __construct()
+    {
+        $this->router = new FastRouteRouter();
+    }
+
+
+    /**
      * @param string $path  Url
      * @param callable $callable Fonction a appelé
      * @param string $name Route
      */
     public function get(string $path, callable $callable, string $name)
     {
-
+        $this->router->addRoute(new ZendRoute($path, $callable, ['GET'], $name));
     }
 
     /**
@@ -37,6 +53,14 @@ class Router
      */
     public function match(ServerRequestInterface $request): ?Route
     {
+        $result = $this->router->match($request);
 
+        if($result->isSuccess()){
+            return new Route($result->getMatchedRouteName(),
+                $result->getMatchedMiddleware(),
+                $result->getMatchedParams()
+            );
+        }
+        return null;
     }
 }
