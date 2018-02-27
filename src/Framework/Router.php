@@ -63,4 +63,9 @@ class Router
         }
         return null;
     }
+
+    public function generateUri(string $name, array $params): ?string
+    {
+        return $this->router->generateUri($name, $params);
+    }
 }
