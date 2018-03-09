@@ -36,10 +36,10 @@ class App
         $this->router = new Router();
 
         //Initialiser chacun des modules
-        foreach ($modules as $module){
+        foreach ($modules as $module) {
             //Passage de la variable d'instance aux diffferents modules
             $this->modules[] = new $module($this->router);
-    }
+        }
     }
 
 
@@ -59,12 +59,12 @@ class App
         //Obtenir la route qui correspond à la requete
         $route = $this->router->match($request);
 
-        if(is_null($route)){
+        if (is_null($route)) {
             return new Response(404, [], '<h1>Error 404</h1>');
         }
 
         $params = $route->getParams();
-        $request = array_reduce(array_keys($params), function($request, $key) use ($params){
+        $request = array_reduce(array_keys($params), function ($request, $key) use ($params) {
             return $request->withAttribute($key, $params[$key]);
         }, $request);
 
@@ -72,11 +72,11 @@ class App
 
         $response = call_user_func_array($route->getCallback(), [$request]);
 
-        if (is_string($response)){
+        if (is_string($response)) {
             return new Response(200, [], $response);
-        }elseif ($response instanceof ResponseInterface){
+        } elseif ($response instanceof ResponseInterface) {
             return $response;
-        }else{
+        } else {
             throw new \Exception('The response is not a string or an instance of ResponseInterface');
         }
 

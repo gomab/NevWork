@@ -7,6 +7,7 @@
  */
 
 use App\Blog\BlogModule;
+
 //Chargemement autoload composer
 require '../vendor/autoload.php';
 

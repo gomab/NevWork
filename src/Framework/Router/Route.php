@@ -9,55 +9,58 @@
      * @package Framework\Router
      */
 
-    class Route{
+class Route
+{
 
-        /**
+    /**
          * @var string
          */
-        private $name;
+    private $name;
 
-        /**
+    /**
          * @var callable
          */
-        private $callback;
+    private $callback;
 
-        /**
+    /**
          * @var array
          */
-        private $parameters;
+    private $parameters;
 
-        public function __construct(string $name, callable $callback, array $parameters)
-        {
+    public function __construct(string $name, callable $callback, array $parameters)
+    {
 
-            $this->name = $name;
-            $this->callback = $callback;
-            $this->parameters = $parameters;
-        }
+        $this->name = $name;
+        $this->callback = $callback;
+        $this->parameters = $parameters;
+    }
 
 
-        /**
+    /**
          * Recupere le nom de la route
          *
          * @return string
          */
-        public function getName():string
-        {
-            return $this->name;
-        }
+    public function getName():string
+    {
+        return $this->name;
+    }
 
-        /**
+    /**
          * recupere le callback
          * @return callable
          */
-        public function getCallback(): callable {
-            return $this->callback;
-        }
+    public function getCallback(): callable
+    {
+        return $this->callback;
+    }
 
-        /**
+    /**
          * Retrieve the URL parameters
          * @return array
          */
-        public function getParams(): array {
-            return $this->parameters;
-        }
+    public function getParams(): array
+    {
+        return $this->parameters;
     }
+}

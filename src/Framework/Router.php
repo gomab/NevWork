@@ -8,7 +8,6 @@
 
 namespace Framework;
 
-
 use Framework\Router\Route;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Expressive\Router\FastRouteRouter;
@@ -55,8 +54,9 @@ class Router
     {
         $result = $this->router->match($request);
 
-        if($result->isSuccess()){
-            return new Route($result->getMatchedRouteName(),
+        if ($result->isSuccess()) {
+            return new Route(
+                $result->getMatchedRouteName(),
                 $result->getMatchedMiddleware(),
                 $result->getMatchedParams()
             );
