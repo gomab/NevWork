@@ -5,6 +5,8 @@
  * Date: 2/27/18
  * Time: 2:19 PM
  */
+
+use App\Blog\BlogModule;
 //Chargemement autoload composer
 require '../vendor/autoload.php';
 
