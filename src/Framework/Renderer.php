@@ -18,7 +18,13 @@ class Renderer
     const DEFAULT_NAMESPACE = '__MAIN';
 
     /**
-     * Cette function ajoute des chemins qui seront plus tard use par le render
+     * Variable globalement accessible pour toutes les vues
+     * @var array
+     */
+    private $globals = [];
+
+    /**
+     * Cette function ajoute des chemins pour charger des vues
      * @param string $namespace
      * @param null|string $path
      * Path can be null
@@ -32,12 +38,16 @@ class Renderer
     }
 
     /**
+     * Permet de rendre une vue
+     * Le chemin peut etre précisé avec des namespaces rajoutés via addPath()
+     * $this->render('view');
+     *  $this->render('@blog/view');
      * @param string $view
      * Nonm de la vue à rendre
      *
      * @return string
      */
-    public function render(string $view): string {
+    public function render(string $view, array $params = []): string {
         if($this->hasNamespace($view)){
             $path = $this->replacenamespace($view) . '.php';
         }else{
@@ -49,11 +59,27 @@ class Renderer
         //Mettre en memoire les infos en sortie
         ob_start();
 
+        //Injecter renderer dans la vue
+        $renderer = $this;
+
+        extract($this->globals);
+
+        //Extraire les params
+        extract($params);
         require($path);
 
         //Recupérer le contenu
         return ob_get_clean();
 
+    }
+
+    /**
+     * Rajoute des variables globales à toutes les vues
+     * @param string $key
+     * @param mixed $value
+     */
+    public function addGlobal(string $key, $value): void {
+        $this->globals[$key] = $value;
     }
 
     /**
