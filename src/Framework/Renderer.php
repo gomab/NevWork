@@ -8,7 +8,6 @@
 
 namespace App\Framework;
 
-
 class Renderer
 {
     //Tableau qui contient des chemins
@@ -29,10 +28,11 @@ class Renderer
      * @param null|string $path
      * Path can be null
      */
-    public function addPath(string $namespace, ?string $path = null): void{
-        if (is_null($path)){
+    public function addPath(string $namespace, ?string $path = null): void
+    {
+        if (is_null($path)) {
             $this->paths[self::DEFAULT_NAMESPACE] = $namespace;
-        }else{
+        } else {
             $this->paths[$namespace] = $path;
         }
     }
@@ -47,10 +47,11 @@ class Renderer
      *
      * @return string
      */
-    public function render(string $view, array $params = []): string {
-        if($this->hasNamespace($view)){
+    public function render(string $view, array $params = []): string
+    {
+        if ($this->hasNamespace($view)) {
             $path = $this->replacenamespace($view) . '.php';
-        }else{
+        } else {
             //Recuperation du chemin qui correspond au namespace par defaut en rajoutant le nom de la vue
             $path = $this->paths[self::DEFAULT_NAMESPACE] .DIRECTORY_SEPARATOR . $view . '.php';
         }
@@ -70,7 +71,6 @@ class Renderer
 
         //Recupérer le contenu
         return ob_get_clean();
-
     }
 
     /**
@@ -78,7 +78,8 @@ class Renderer
      * @param string $key
      * @param mixed $value
      */
-    public function addGlobal(string $key, $value): void {
+    public function addGlobal(string $key, $value): void
+    {
         $this->globals[$key] = $value;
     }
 
@@ -89,7 +90,8 @@ class Renderer
      * @return bool
      *
      */
-    private function hasNamespace(string $view): bool {
+    private function hasNamespace(string $view): bool
+    {
         return $view[0] === '@';
     }
 
@@ -98,11 +100,13 @@ class Renderer
      * @param string $view
      * @return string
      */
-    private function getNamespace(string $view):string {
+    private function getNamespace(string $view):string
+    {
         return substr($view, 1, strpos($view, '/') -1);
     }
 
-    private function replacenamespace(string $view): string {
+    private function replacenamespace(string $view): string
+    {
         $namespace = $this->getNamespace($view);
         return str_replace('@' . $namespace, $this->paths[$namespace], $view);
     }
